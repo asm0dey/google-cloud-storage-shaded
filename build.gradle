@@ -1,0 +1,42 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+    id 'java-library'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation 'com.google.cloud:google-cloud-storage:1.105.0'
+}
+
+shadowJar {
+    baseName = "google-cloud-storage"
+    //for(i in ['common', 'api']){
+        //relocate "com.google.$i", "org.jetbrains.bigdataide.shaded.$i"
+    //}
+    relocate ('com.google', 'org.jetbrains.bigdataide.shaded.com.google') {
+        exclude 'com.google.cloud.**.*'
+        exclude 'com.google.api.gax.paging.Page'
+    }
+}
+
+publishing {
+  publications {
+    shadow(MavenPublication) { publication ->
+      project.shadow.component(publication)
+    }
+  }
+  repositories {
+    maven {
+      url "https://repo.labs.intellij.net/big-data-ide"
+    }
+  }
+}
+
+group = "org.jetbrains.bigdataide.shaded"
+version = "1.105.0"
