@@ -5,13 +5,14 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
+    //mavenLocal()
     mavenCentral()
+    maven { url 'https://jitpack.io' }
     jcenter()
 }
 
 dependencies {
-    implementation 'com.google.cloud:google-cloud-storage:1.105.0'
+    implementation 'com.google.cloud:google-cloud-storage:1.105.2'
 }
 
 shadowJar {
